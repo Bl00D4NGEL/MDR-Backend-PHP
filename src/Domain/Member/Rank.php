@@ -1,8 +1,10 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Domain\Member;
 
-class Ranks
+final class Rank
 {
     public const INITIATE = 'Initiate';
     public const MEMBER = 'Member';
@@ -34,8 +36,19 @@ class Ranks
         self::PROBATION
     ];
 
-    public static function isValidRank(string $rank)
+    private string $value;
+
+    public function __construct(string $value)
     {
-        return in_array($rank, self::$validRanks, true);
+        if (!\in_array($value, self::$validRanks, true)) {
+            throw new \InvalidArgumentException(\sprintf('Rank "%s" is not valid.', $value));
+        }
+
+        $this->value = $value;
+    }
+
+    public function __toString(): string
+    {
+        return $this->value;
     }
 }

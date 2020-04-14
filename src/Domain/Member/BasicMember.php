@@ -2,21 +2,17 @@
 
 namespace App\Domain\Member;
 
-use InvalidArgumentException;
-
+/** @todo omit base classes, put Logic in Member Class */
 abstract class BasicMember implements MemberType
 {
     private string $name;
     private int $id;
-    private string $rank;
+    private Rank $rank;
 
-    public function __construct(string $name, int $id, string $rank = Ranks::INITIATE)
+    public function __construct(string $name, int $id, Rank $rank)
     {
         $this->name = $name;
         $this->id = $id;
-        if (!Ranks::isValidRank($rank)) {
-            throw new InvalidArgumentException("Rank $rank is invalid!");
-        }
         $this->rank = $rank;
     }
 
@@ -30,7 +26,7 @@ abstract class BasicMember implements MemberType
         return $this->name;
     }
 
-    public function getRank(): string
+    public function getRank(): Rank
     {
         return $this->rank;
     }
